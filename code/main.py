@@ -3,10 +3,10 @@
 
 from __future__ import print_function, unicode_literals
 
+import MySQLdb
 import pandas as pd
 from sklearn.cross_validation import train_test_split
 
-import MySQLdb
 from Classifier import Classifier
 from params import *
 
@@ -32,8 +32,8 @@ def select_feature(df):
 def classify(X, y):
     X_train, X_test, y_train, y_test = train_test_split(
         X, y, random_state=None, train_size=TRAIN_SIZE)
-    rf = Classifier(X_train, X_test, y_train, y_test)
-    rf.testing()
+    clf = Classifier(X_train, X_test, y_train, y_test)
+    clf.testing(clf.RF)
 
 
 def main():

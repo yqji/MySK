@@ -16,14 +16,17 @@ FIELDS = ['open_days', 'is_activate', 'activate_days', 'stmt_gap', 'repay_gap',
           'credit_available', 'credit_usage', 'tc1', 'max_trans1',
           'tc3', 'max_trans3', 'node_id']
 CONDITIONS = ["account_no <> ''", ]
+LIMIT = '1000'
 
 # -*- DO NOT MODIFY BELOW -*-
 if FIELDS:
     FIELDS_STR = ', '.join(FIELDS)
 else:
     FIELDS_STR = '*'
-
-CONDITION_STR = ' AND '.join(CONDITIONS)
+if LIMIT:
+    CONDITION_STR = ' LIMIT '.join([' AND '.join(CONDITIONS), LIMIT])
+else:
+    CONDITION_STR = ' AND '.join(CONDITIONS)
 if CONDITIONS:
     DB_SQL = 'SELECT %s FROM %s WHERE %s;' % (
         FIELDS_STR, DB_TABLE, CONDITION_STR)
