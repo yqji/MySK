@@ -2,9 +2,9 @@
 
 ## 0. 简介
 
-**作者: ** **David Ji**
+**作者: David Ji**
 
-**创建时间: ** **July 7, 2016**
+**创建时间: July 7, 2016**
 
 **功能: ** 
 
@@ -88,10 +88,10 @@
 
     > 注:
     >
-    1. 如果`SELECT [FIELDS] FROM [TABLE] WHERE [COND1 AND ...] LIMIT [NUM]`形式可以满足查询需求, 则设置`DB_TABLE`, `FIELDS`, `CONDITIONS`和`LIMIT`参数即可, `DB_SQL`参数无需设置;
+    > 1. 如果`SELECT [FIELDS] FROM [TABLE] WHERE [COND1 AND ...] LIMIT [NUM]`形式可以满足查询需求, 则设置`DB_TABLE`, `FIELDS`, `CONDITIONS`和`LIMIT`参数即可, `DB_SQL`参数无需设置;
     >
-    2. 若上述查询表达形式不能满足需求, 则需设置`DB_SQL`为完整的查询语句, 其它参数无需设置.
-    3. 若`CONDITIONS`参数中含有多个**条件表达式**, 会认为这些表达式之间是`AND`关系, 若需要指定`OR`关系的条件, 可以将其合并为一个条件写入`CONDITIONS`中.
+    > 2. 若上述查询表达形式不能满足需求, 则需设置`DB_SQL`为完整的查询语句, 其它参数无需设置.
+    > 3. 若`CONDITIONS`参数中含有多个**条件表达式**, 会认为这些表达式之间是`AND`关系, 若需要指定`OR`关系的条件, 可以将其合并为一个条件写入`CONDITIONS`中.
 
 - **Algorithm Parameters**
 
@@ -105,7 +105,7 @@
 
     > 注:
     >
-    这种指定方式基于数据集中的特征字段是连续排列的, 如果源数据中的特征字段不是连续排列的, 可以通过`FIELDS`参数来调整顺序, 使其连续.
+    > 这种指定方式基于数据集中的特征字段是连续排列的, 如果源数据中的特征字段不是连续排列的, 可以通过`FIELDS`参数来调整顺序, 使其连续.
 
 ### 2.2 Classifier.py
     
