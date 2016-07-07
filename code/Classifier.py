@@ -11,12 +11,13 @@ from sklearn.metrics import accuracy_score
 from sklearn.metrics import classification_report
 from sklearn.metrics import confusion_matrix
 from sklearn.metrics import f1_score
-from sklearn.metrics import fbeta_score
 from sklearn.metrics import hamming_loss
 from sklearn.metrics import jaccard_similarity_score
 from sklearn.metrics import precision_score
 from sklearn.metrics import recall_score
 from sklearn.metrics import zero_one_loss
+
+__author__ = 'David'
 
 
 class Classifier(object):
@@ -29,6 +30,36 @@ class Classifier(object):
         self.y_train = y_train
         self.y_test = y_test
 
+    def predict(self, clf, proba=False):
+        if not proba:
+            preds = clf.predict(self.X_test)
+        else:
+            preds = clf.predict_proba(self.X_test)
+        return preds
+
+    def performance(self, preds):
+        accuracy = accuracy_score(self.y_test, preds)
+        precision = precision_score(self.y_test, preds)
+        recall = recall_score(self.y_test, preds)
+        f1 = f1_score(self.y_test, preds)
+        jss = jaccard_similarity_score(self.y_test, preds)
+        hl = hamming_loss(self.y_test, preds)
+        zol = zero_one_loss(self.y_test, preds)
+
+        return {'accuracy_score': accuracy,
+                'precision_score': precision,
+                'recall_score': recall,
+                'f1_score': f1,
+                'jaccard_similarity_score': jss,
+                'hamming_loss': hl,
+                'zero_one_loss': zol}
+
+    def report(self, preds):
+        return classification_report(self.y_test, preds)
+
+    def matrix(self, preds):
+        return confusion_matrix(self.y_test, preds)
+
     @property
     def RF(self):
         clf = RandomForestClassifier(n_estimators=10, criterion='gini',
@@ -39,6 +70,7 @@ class Classifier(object):
                                      bootstrap=True, oob_score=False, n_jobs=1,
                                      random_state=None, verbose=0,
                                      warm_start=False, class_weight=None)
+        print('RandomForest Classifier is fitting...')
         clf.fit(self.X_train, self.y_train)
         return clf
 
@@ -50,6 +82,7 @@ class Classifier(object):
                                  solver='liblinear', max_iter=100,
                                  multi_class='ovr', verbose=0,
                                  warm_start=False, n_jobs=1)
+        print('LogisticRegression Classifier is fitting...')
         clf.fit(self.X_train, self.y_train)
         return clf
 
@@ -64,6 +97,7 @@ class Classifier(object):
                                          random_state=None, max_features=None,
                                          verbose=0, max_leaf_nodes=None,
                                          warm_start=False, presort='auto')
+        print('GBDT Classifier is fitting...')
         clf.fit(self.X_train, self.y_train)
         return clf
 
@@ -73,6 +107,7 @@ class Classifier(object):
                   shrinking=True, probability=False, tol=0.001, cache_size=200,
                   class_weight=None, verbose=False, max_iter=-1,
                   decision_function_shape=None, random_state=None)
+        print('SVC Classifier is fitting...')
         clf.fit(self.X_train, self.y_train)
         return clf
 
@@ -83,6 +118,7 @@ class Classifier(object):
                         fit_intercept=True, intercept_scaling=1,
                         class_weight=None, verbose=0, random_state=None,
                         max_iter=1000)
+        print('LinearSVC Classifier is fitting...')
         clf.fit(self.X_train, self.y_train)
         return clf
 
@@ -93,41 +129,24 @@ class Classifier(object):
                     cache_size=200, class_weight=None, verbose=False,
                     max_iter=-1, decision_function_shape=None,
                     random_state=None)
+        print('nuSVC Classifier is fitting...')
         clf.fit(self.X_train, self.y_train)
         return clf
 
-    def testing(self, clf, purpose='predict'):
-        if purpose == 'predict':
-            preds = clf.predict(self.X_test)
-            self.result_output(preds)
-        elif purpose == 'predict_proba':
-            clf.predict_proba(self.X_test)
-        else:
-            print('Error: `purpose` must in {`predict`, `predict_proba`}')
-
-    def result_output(self, preds):
-        accuracy = accuracy_score(self.y_test, preds)
-        precision = precision_score(self.y_test, preds)
-        recall = recall_score(self.y_test, preds)
-        f1 = f1_score(self.y_test, preds)
-        fbeta = fbeta_score(self.y_test, preds, 0.5)
-        jss = jaccard_similarity_score(self.y_test, preds)
-        hl = hamming_loss(self.y_test, preds)
-        zol = zero_one_loss(self.y_test, preds)
-        report = classification_report(self.y_test, preds)
-        matrix = confusion_matrix(self.y_test, preds)
-
-        return {'accuracy_score': accuracy,
-                'precision_score': precision,
-                'recall_score': recall,
-                'f1_score': f1,
-                'fbeta_score': fbeta,
-                'jaccard_similarity_score': jss,
-                'hamming_loss': hl,
-                'zero_one_loss': zol,
-                'classification_report': report,
-                'confusion_matrix': matrix}
-
     @property
-    def compare(self):
-        pass
+    def comparison(self):
+        rf_preds = self.RF.predict(self.X_test)
+        lr_preds = self.LR.predict(self.X_test)
+        gbdt_preds = self.GBDT.predict(self.X_test)
+        svc_preds = self.SVM_SVC.predict(self.X_test)
+        linear_svc_preds = self.SVM_LinearSVC.predict(self.X_test)
+        nu_svc_preds = self.SVM_nuSVC.predict(self.X_test)
+        print('All done.')
+
+        return {'RandomForest': self.performance(rf_preds),
+                'LogisticRegression': self.performance(lr_preds),
+                'GBDT': self.performance(gbdt_preds),
+                'SVC': self.performance(svc_preds),
+                'LinearSVC': self.performance(linear_svc_preds),
+                'nuSVC': self.performance(nu_svc_preds)
+                }

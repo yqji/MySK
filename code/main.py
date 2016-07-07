@@ -10,6 +10,8 @@ from sklearn.cross_validation import train_test_split
 from Classifier import Classifier
 from params import *
 
+__author__ = 'David'
+
 
 def read_table():
     conn = MySQLdb.connect(user=USER, passwd=PASSWORD, db=DB,
@@ -32,13 +34,16 @@ def select_feature(df):
 def classify(X, y):
     X_train, X_test, y_train, y_test = train_test_split(
         X, y, random_state=None, train_size=TRAIN_SIZE)
-    clf = Classifier(X_train, X_test, y_train, y_test)
-    clf.testing(clf.RF)
+    clfs = Classifier(X_train, X_test, y_train, y_test)
+    return clfs
 
 
 def main():
     X, y = select_feature(read_table())
-    classify(X, y)
+    clfs = classify(X, y)
+
+    # Something You Want to DO
+    # ...
 
 if __name__ == '__main__':
     main()
