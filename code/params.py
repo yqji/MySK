@@ -1,24 +1,26 @@
-#! usr/bin/env pyhon
+#! usr/bin/env python
 # coding: utf-8
 
 # DataBase Parameters
-USER = 'david'
-PASSWORD = '19920516'
-HOST = '192.168.1.188'
+USER = ''
+PASSWORD = ''
+HOST = ''
 PORT = 3306
-DB = 'ivr'
-CHARSET = 'UTF8'
+DB = ''
+CHARSET = ''
 
 # Data Parameters
-DB_TABLE = 'indicator'
-FIELDS = ['stmt_gap', 'repay_gap', 'open_days', 'is_activate', 'activate_days',
-          'pb1', 'pb2', 'pb3', 'last_repay_amt', 'last_repay_gap',
-          'credit_available', 'credit_usage', 'credit_adjustment', 'tc1',
-          'tc3', 'max_trans1', 'max_trans3', 'on_offline', 'has_active_epp',
-          'avg_ec', 'max_ec', 'min_ec', 'node_id']
-CONDITIONS = ['account_no <> ""']
-LIMIT = '10'
+DB_TABLE = ''
+FIELDS = []
+CONDITIONS = []
+LIMIT = ''
 DB_SQL = ''
+
+# Algorithm Parameters
+FEATURE_START = 0
+FEATURE_END = -1
+LABEL = -1
+TRAIN_SIZE = 0.6
 
 # -*- DO NOT MODIFY BELOW -*-
 if not DB_SQL:
@@ -36,11 +38,3 @@ if not DB_SQL:
     else:
         DB_SQL = 'SELECT %s FROM %s;' % (FIELDS_STR, DB_TABLE + CONDITION_STR)
 # -*- DO NOT MODIFY ABOVE -*-
-
-# Algorithm Parameters
-FEATURE_STATR = 0
-FEATURE_END = -1
-LABEL = -1
-TRAIN_SIZE = 0.6
-
-print(DB_SQL)

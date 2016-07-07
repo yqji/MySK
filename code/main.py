@@ -1,4 +1,4 @@
-#! usr/bin/env pyhon
+#! usr/bin/env python
 # coding: utf-8
 
 from __future__ import print_function, unicode_literals
@@ -24,7 +24,7 @@ def read_table():
 
 
 def select_feature(df):
-    features = df.columns[FEATURE_STATR:FEATURE_END]
+    features = df.columns[FEATURE_START:FEATURE_END]
     label = df.columns[LABEL]
     X = df[features]
     y = df[label]
@@ -41,7 +41,7 @@ def classify(X, y):
 def main():
     X, y = select_feature(read_table())
     clfs = classify(X, y)
-
+    print(clfs.comparison)
     # Something You Want to DO
     # ...
 

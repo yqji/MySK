@@ -95,7 +95,7 @@
 
 - **Algorithm Parameters**
 
-    `FEATURE_STATR`: 特征字段起始下标(含), `int`类型.
+    `FEATURE_START`: 特征字段起始下标(含), `int`类型.
 
     `FEATURE_END`: 特征字段结束下标(不含), `int`类型.
 
