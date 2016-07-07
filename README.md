@@ -6,7 +6,7 @@
 
 **创建时间: July 7, 2016**
 
-**功能: **
+**功能:**
 
 - 打包了[`scikit-learn`](http://scikit-learn.org/stable/index.html)中主要的分类器:
 
