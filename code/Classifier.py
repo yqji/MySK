@@ -138,15 +138,20 @@ class Classifier(object):
         rf_preds = self.RF.predict(self.X_test)
         lr_preds = self.LR.predict(self.X_test)
         gbdt_preds = self.GBDT.predict(self.X_test)
-        svc_preds = self.SVM_SVC.predict(self.X_test)
-        linear_svc_preds = self.SVM_LinearSVC.predict(self.X_test)
-        nu_svc_preds = self.SVM_nuSVC.predict(self.X_test)
+        # svc_preds = self.SVM_SVC.predict(self.X_test)
+        # linear_svc_preds = self.SVM_LinearSVC.predict(self.X_test)
+        # nu_svc_preds = self.SVM_nuSVC.predict(self.X_test)
         print('All done.')
 
         return {'RandomForest': self.performance(rf_preds),
                 'LogisticRegression': self.performance(lr_preds),
                 'GBDT': self.performance(gbdt_preds),
-                'SVC': self.performance(svc_preds),
-                'LinearSVC': self.performance(linear_svc_preds),
-                'nuSVC': self.performance(nu_svc_preds)
+                # 'SVC': self.performance(svc_preds),
+                # 'LinearSVC': self.performance(linear_svc_preds),
+                # 'nuSVC': self.performance(nu_svc_preds)
                 }
+
+    @property
+    def best_model(self):
+        for (model, performance) in self.comparison.iteritems():
+            print(model)
